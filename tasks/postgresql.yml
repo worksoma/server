@@ -1,0 +1,8 @@
+---
+# PostgreSQL install
+
+- name: postgresql - install needed packages
+  yum:
+    name:
+      - postgresql
+      - postgresql-server

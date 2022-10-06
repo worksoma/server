@@ -1,0 +1,74 @@
+---
+# Nginx proxying install
+
+- name: nginx - install needed packages
+  yum:
+    name:
+      - nginx
+
+- name: nginx - Create certifcate directories
+  become: true
+  file:
+    path: /etc/pki/nginx/private
+    state: directory
+    mode: '755'
+
+- name: nginx - Install Python cryptography libs for certificate creation
+  become: true
+  yum:
+    name: python3-cryptography
+    state: present
+      
+- name: nginx - Generate private key
+  become: true
+  openssl_privatekey:
+    path: /etc/pki/nginx/private/server.key
+    size: 2048
+      
+- name: nginx - Generate certificate signing request
+  become: true
+  openssl_csr:
+    path: /etc/ssl/certs/server.crt
+    privatekey_path: /etc/pki/nginx/private/server.key
+      
+- name: nginx - Generate self-signed certificate
+  become: true
+  x509_certificate:
+    path: /etc/pki/nginx/server.crt
+    csr_path: /etc/ssl/certs/server.crt
+    privatekey_path: /etc/pki/nginx/private/server.key
+    provider: selfsigned
+
+- name: nginx - copy Nginx https config
+  become: true
+  copy:
+    src: https.conf
+    dest: /etc/nginx/conf.d
+
+- name: nginx - Start/Restart
+  become: true
+  systemd:
+    name: nginx
+    enabled: yes
+    state: reloaded
+
+- name: nginx - Ensure Firewalld is started
+  become: true
+  systemd:
+    name: firewalld
+    state: started
+
+- name: nginx - Open firewall port
+  become: true
+  firewalld:
+    port: 443/tcp
+    permanent: true
+    state: enabled
+    immediate: yes
+
+# setsebool httpd_can_network_connect 1 -P
+- name: nginx - Set httpd_can_network_connect flag on and keep it persistent across reboots
+  seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes
