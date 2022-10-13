@@ -6,3 +6,41 @@
     name:
       - postgresql
       - postgresql-server
+
+- name: postgresql - check if initialized
+  ansible.builtin.stat:
+    path: "/var/lib/pgsql/data/pg_hba.conf"
+  register: postgres_data
+
+- name: postgresql - initialize PostgreSQL
+  shell: "postgresql-setup initdb"
+  when: not postgres_data.stat.exists
+
+- name: postgresql - allow local non-user ipv4 connections
+  lineinfile:
+    path: "/var/lib/pgsql/data/pg_hba.conf"
+    search_string: 'host    all             all             127.0.0.1/32            ident'
+    line: 'host    all             all             127.0.0.1/32            md5'
+
+- name: postgresql - allow local non-user ipv6 connections
+  lineinfile:
+    path: "/var/lib/pgsql/data/pg_hba.conf"
+    search_string: 'host    all             all             ::1/128                 ident'
+    line: 'host    all             all             127.0.0.1/32            md5'
+
+- name: postgresql - upload sql script
+  copy:
+    src: tasklist-create.sql
+    dest: /tmp/tasklist-create.sql
+
+- name: postgresql - create tasklist user and db
+  shell: psql -f /tmp/tasklist-create.sql
+  become: true
+  become_user: postgres
+
+- name: postgresql - Start/Restart
+  become: true
+  systemd:
+    name: postgresql
+    enabled: yes
+    state: reloaded
