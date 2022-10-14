@@ -33,14 +33,14 @@
     src: tasklist-create.sql
     dest: /tmp/tasklist-create.sql
 
-- name: postgresql - create tasklist user and db
-  shell: psql -f /tmp/tasklist-create.sql
-  become: true
-  become_user: postgres
-
 - name: postgresql - Start/Restart
   become: true
   systemd:
     name: postgresql
     enabled: yes
     state: reloaded
+
+- name: postgresql - create tasklist user and db
+  shell: psql -f /tmp/tasklist-create.sql
+  become: true
+  become_user: postgres
