@@ -1,0 +1,5 @@
+- name: misc - install packages
+  yum:
+    name:
+      - logwatch
+      - s-nail
