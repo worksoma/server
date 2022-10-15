@@ -1,5 +1,17 @@
 - name: misc - install packages
   yum:
     name:
-      - logwatch
-      - s-nail
+      - cockpit
+
+- name: misc - copy cockpit.conf
+  become: true
+  copy:
+    src: cockpit.conf
+    dest: /etc/cockpit/cockpit.conf
+
+- name: misc - start cockpit
+  become: true
+  systemd:
+    name: cockpit
+    enabled: yes
+    state: reloaded
