@@ -42,13 +42,13 @@
 - name: nginx - copy Nginx https config
   become: true
   copy:
-    src: https.conf
+    src: files/https.conf
     dest: /etc/nginx/conf.d
 
 - name: nginx - copy htpasswd
   become: true
   copy:
-    src: htpasswd
+    src: files/htpasswd
     dest: /etc/nginx/.htpasswd
 
 - name: nginx - Start/Restart

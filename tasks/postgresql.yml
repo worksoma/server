@@ -30,7 +30,7 @@
 
 - name: postgresql - upload sql script
   copy:
-    src: tasklist-create.sql
+    src: files/tasklist-create.sql
     dest: /tmp/tasklist-create.sql
 
 - name: postgresql - Start/Restart

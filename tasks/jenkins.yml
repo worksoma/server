@@ -17,7 +17,7 @@
 
 - name: jenkins - copy customizations
   copy:
-    src: override.conf
+    src: files/override.conf
     dest: /etc/systemd/system/jenkins.service.d/override.conf
 
 - name: jenkins - enable and start

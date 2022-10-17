@@ -4,9 +4,8 @@
       - cockpit
 
 - name: misc - copy cockpit.conf
-  become: true
-  copy:
-    src: cockpit.conf
+  template:
+    src: files/cockpit_conf.j2
     dest: /etc/cockpit/cockpit.conf
 
 - name: misc - start cockpit
