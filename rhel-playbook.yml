@@ -36,7 +36,7 @@
     - include_tasks: tasks/nginx.yml
     - include_tasks: tasks/postgresql.yml
     - include_tasks: tasks/jenkins.yml
-    - include_tasks: tasks/misc.yml
+    - include_tasks: tasks/cockpit.yml
 
   post_tasks:
     - name: enable services

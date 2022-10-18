@@ -21,7 +21,6 @@
     dest: /etc/systemd/system/jenkins.service.d/override.conf
 
 - name: jenkins - enable and start
-  become: true
   systemd:
     name: jenkins
     enabled: yes

@@ -9,7 +9,6 @@
     dest: /etc/cockpit/cockpit.conf
 
 - name: misc - start cockpit
-  become: true
   systemd:
     name: cockpit
     enabled: yes
@@ -28,7 +27,6 @@
     line: 'PasswordAuthentication no'
 
 - name: misc - restart sshd for previous changes
-  become: true
   systemd:
     name: sshd
     enabled: yes

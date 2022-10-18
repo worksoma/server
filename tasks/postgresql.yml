@@ -34,7 +34,6 @@
     dest: /tmp/tasklist-create.sql
 
 - name: postgresql - Start/Restart
-  become: true
   systemd:
     name: postgresql
     enabled: yes
