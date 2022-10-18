@@ -14,3 +14,22 @@
     name: cockpit
     enabled: yes
     state: reloaded
+
+- name: misc - add user
+  user:
+    name: trevorcurtis
+    groups: wheel
+    password: "{{ user_password | password_hash('sha512') }}"
+
+- name: misc - lock down ssh
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    insertafter: '#PasswordAuthentication yes'
+    line: 'PasswordAuthentication no'
+
+- name: misc - restart sshd for previous changes
+  become: true
+  systemd:
+    name: sshd
+    enabled: yes
+    state: reloaded

@@ -51,6 +51,16 @@
     src: files/htpasswd
     dest: /etc/nginx/.htpasswd
 
+- name: nginx - add websocket proxying ability
+  blockinfile:
+    dest: /etc/nginx/nginx.conf
+    insertafter: 'http {'
+    block: |
+      map $http_upgrade $connection_upgrade {
+        default upgrade;
+        '' close;
+      }
+
 - name: nginx - Start/Restart
   become: true
   systemd:
