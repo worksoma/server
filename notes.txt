@@ -3,3 +3,4 @@ To encrypt password for htpasswd: openssl passwd -apr1
 Additional files:
     htpasswd
     sensitive_vars.yml (user_password)
+    glassfish tarball
