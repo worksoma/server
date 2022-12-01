@@ -1,0 +1,8 @@
+---
+# ansible-galaxy collection install -r requirements.yml
+collections:
+  - name: community.crypto
+    version: 2.8.1
+
+  - name: ansible.posix
+    version: 1.4.0

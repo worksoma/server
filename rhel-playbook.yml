@@ -22,7 +22,6 @@
     - name: install needed packages
       yum:
         name:
-          - wget
           - podman
           - dnf-automatic
 
@@ -37,6 +36,7 @@
     - include_tasks: tasks/postgresql.yml
     - include_tasks: tasks/jenkins.yml
     - include_tasks: tasks/cockpit.yml
+    - include_tasks: tasks/glassfish.yml
 
   post_tasks:
     - name: enable services

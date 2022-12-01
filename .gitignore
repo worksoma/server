@@ -1,2 +1,3 @@
 htpasswd
 sensitive_vars.yml
+glassfish*.zip

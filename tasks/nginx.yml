@@ -1,5 +1,4 @@
 ---
-# Nginx proxying install
 
 - name: nginx - install needed packages
   yum:
@@ -26,7 +25,7 @@
   openssl_csr:
     path: /etc/ssl/certs/server.crt
     privatekey_path: /etc/pki/nginx/private/server.key
-      
+
 - name: nginx - Generate self-signed certificate
   x509_certificate:
     path: /etc/pki/nginx/server.crt

@@ -1,0 +1,27 @@
+---
+
+- name: glassfish - copy glassfish to server
+  copy:
+    src: "{{ item }}"
+    dest: /usr/local/
+  with_fileglob: "glassfish-*"
+
+- name: glassfish - ensure needed packages are installed
+  yum:
+    name:
+      - java-17-openjdk-devel
+      - java-17-openjdk-jmods
+      - unzip
+
+- name: glassfish - get remote file name
+  shell: "ls -1 /usr/local/glassfish-*"
+  register: glassfish_remote
+
+- debug:
+    msg: "{{ glassfish_remote.stdout }}"
+      
+- name: glassfish - untar
+  unarchive:
+    src: "{{ glassfish_remote.stdout }}"
+    dest: /usr/local/
+    remote_src: yes
