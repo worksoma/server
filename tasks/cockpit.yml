@@ -4,6 +4,7 @@
   yum:
     name:
       - cockpit
+      - cockpit-podman
 
 - name: cockpit - copy cockpit.conf
   template:

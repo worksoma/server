@@ -16,9 +16,6 @@
 - name: glassfish - get remote file name
   shell: "ls -1 /usr/local/glassfish-*"
   register: glassfish_remote
-
-- debug:
-    msg: "{{ glassfish_remote.stdout }}"
       
 - name: glassfish - untar
   unarchive:
