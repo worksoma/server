@@ -19,7 +19,7 @@
 
 - name: cockpit - add user
   user:
-    name: trevorcurtis
+    name: tcurtis
     groups: wheel
     password: "{{ user_password | password_hash('sha512') }}"
 
